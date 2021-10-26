@@ -1,9 +1,6 @@
 ﻿using System;
 using static System.Console;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Enumerations.Index
 {
@@ -52,7 +49,7 @@ namespace Enumerations.Index
 
         public object this[string type] => type switch
         {
-            "int" or "INT" => i,
+            "int" => i,
             "object" => o,
             "string" => s,
             _ => throw new IndexOutOfRangeException()

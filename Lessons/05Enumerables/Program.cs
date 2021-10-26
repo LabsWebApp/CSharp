@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using static System.Console;
 
@@ -56,7 +57,7 @@ namespace Enumerations
                             return item;
                     }
 
-                    return null;
+                    throw new ArgumentOutOfRangeException();
                 }
             }
 
@@ -83,7 +84,7 @@ namespace Enumerations
             
             foreach (var item in a["A"]) 
                 WriteLine(item);
-
+            WriteLine("*****+*****");
             var witha = a["a"];
 
             foreach (var item in witha)

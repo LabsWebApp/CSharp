@@ -4,11 +4,20 @@ using System.Drawing;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using ForI;
 using UseGC;
 
 namespace Classes
 {
+    public interface IDdd
+    {
+        void Ddd(); //{ WriteLine(this); }
+    }
+
+    public class Aa
+    {
+        public void Ddd() { WriteLine(this); }
+    }
+
     class Father
     {
         
@@ -39,6 +48,11 @@ namespace Classes
 
         static void Main(string[] args)
         {
+            Aa a = new();
+            var ddd = a as IDdd;
+            WriteLine(ddd != null);
+            ReadKey();
+
             var s = new Son();
             var f = (Father) s;
             var d = (Daughter) f;

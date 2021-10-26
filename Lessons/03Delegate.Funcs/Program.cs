@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using static System.Console;
 
 namespace Delegate.Funcs
@@ -9,7 +11,7 @@ namespace Delegate.Funcs
         #region Action
         static void Operation(int x1, int x2, Action<int, int> op)
         {
-            if (x1 > x2) op(x1, x2);
+            if (x1 > x2) op?.Invoke(x1, x2);
         }
         static void Add(int x1, int x2)
             => WriteLine("Сумма чисел: " + (x1 + x2));
@@ -34,6 +36,16 @@ namespace Delegate.Funcs
         }
         #endregion
 
+        /*
+         * Ковариантностью
+         * называется сохранение иерархии наследования исходных типов 
+         * в производных типах в том же порядке.
+         *  
+         * Контравариантностью
+         * называется обращение иерархии исходных типов 
+         * на противоположную в производных типах.
+         */
+
         #region Ко(контра)вариантность на пальцах
         /// <summary>
         /// Абстрактный питомец
@@ -51,29 +63,25 @@ namespace Delegate.Funcs
                 set
                 {
                     if (value && !_sterile) _sterile = true;
+                    WriteLine($"{GetType().Name} is {(_sterile ? "sterile" : "not sterile")}.");
                 }
             }
         }
+
         /// <summary>
         /// Котик
         /// </summary>
         class Cat : Pet { }
+
         /// <summary>
         /// Собачка
         /// </summary>
         class Dog : Pet { }
+
         /// <summary>
         /// Хомячок
         /// </summary>
         class Hamster : Pet { }
-
-        /// <summary>
-        /// Переопределяет Action из System, инкапсуляция метода,
-        /// который ничего не возвращает и имеет один параметр
-        /// </summary>
-        /// <typeparam name="T">любой тип данных</typeparam>
-        /// <param name="obj">объект для работы метода</param>
-        delegate void Action<in T>(T obj);
 
         /// <summary>
         /// Переопределяет Func из System, инкапсуляция метода,
@@ -85,13 +93,24 @@ namespace Delegate.Funcs
         delegate TResult Func<out TResult>();
 
         /// <summary>
+        /// Переопределяет Action из System, инкапсуляция метода,
+        /// который ничего не возвращает и имеет один параметр
+        /// </summary>
+        /// <typeparam name="T">любой тип данных</typeparam>
+        /// <param name="obj">объект для работы метода</param>
+        delegate void Action<in T>(T obj);
+
+        /// <summary>
         /// Зоомагазин
         /// </summary>
         static class Petshop
         {
             private static readonly Hamster Hamster1 = new ();
+            private static readonly Cat Cat1 = new ();
             public static Func<Hamster> SellHamster { get; } 
                 = () => Hamster1;
+            public static Func<Cat> SellCat { get; } 
+                = () => Cat1;
         }
 
         /// <summary>
@@ -105,37 +124,69 @@ namespace Delegate.Funcs
             public Action<Pet> Sterilize { get; } =
                 p => p.Sterile = true;
         }
-        
         #endregion
+
+        #region Ко(контра)вариантность в интерфейсах
+        interface ICovariance<out T>
+        {
+            T Get();
+        }
+
+        abstract class CoPet<T> : ICovariance<T> where T : Pet
+        {
+            public abstract T Get();
+        }
+
+        class CoCat : CoPet<Cat>
+        {
+            public override Cat Get() => new();
+        }
+
+        interface IContravariance<in T>
+        {
+            void Do(T param);
+        }
+
+        class ContraPet<T> : IContravariance<T> where T : Pet
+        {
+            public void Do(T param) => WriteLine(param.GetType().Name);
+        }
+        #endregion
+
         static void Main(string[] args)
         {
-            #region делегат делегата
-
-            Func<Action, Action, Action> dd;
-            dd = (a1, _) => a1;
-           // dd(() => WriteLine("a1"), null).Invoke();
-            dd = (a1, a2) =>
             {
-                a2?.Invoke();
-                a1?.Invoke();
-                return a1 + a2;
-            };
-            Action mainD = dd(
-                () => WriteLine("a1"),
-                () => WriteLine("a2"));
-            ReadKey();
-            mainD();
+                /*#region делегат делегата
+                
+                            Func<Action, Action, Action> dd;
+                            dd = (a1, _) => a1;
+                            // dd(() => WriteLine("a1"), null).Invoke();
+                            dd = (a1, a2) =>
+                            {
+                                a2?.Invoke();
+                                a1?.Invoke();
+                                return a1 + a2;
+                            };
+                            Action mainD = dd(
+                                () => WriteLine("a1"),
+                                () => WriteLine("a2"));
+                            ReadKey();
+                            mainD();
+                
+                            #endregion
+                            ReadKey();*/
+            }
 
-            #endregion
-            ReadKey();
             #region Action
-            Action a = delegate { WriteLine("Hi"); };
-            //a();
-            Action<int, int> op;
-            op = Add;
+            //Action a = delegate { WriteLine("Hi"); };
+            ////a();
+            //Action<int, int> op;
+            //op = Add;
             //Operation(10, 6, op);
-            op = Subtract;
+            //op = Subtract;
             //Operation(10, 6, op);
+            //Operation(6, 10, op);
+            //ReadKey();
             #endregion
 
             #region Predicate
@@ -146,18 +197,21 @@ namespace Delegate.Funcs
             #endregion
 
             #region Func
+            //Func<bool> isAm = () => DateTime.Now.Hour < 12;
+            //WriteLine(isAm());
 
-            Func<bool> isAm = () => DateTime.Now.Hour < 12;
-            //WriteLine(isAm ());
-
-            Func<int, int> retFunc = Factorial;
-            int n1 = GetInt(6, retFunc);
+            //Func<int, int> retFunc = Factorial;
+            //int n1 = GetInt(6, retFunc);
             //WriteLine(n1);
-            n1 = GetInt(0, retFunc);
+            //n1 = GetInt(0, retFunc);
             //WriteLine(n1);
 
-            int n2 = GetInt(6, x => x * x);
+            //int n2 = GetInt(6, x =>
+            //{
+            //    return x * x;
+            //});
             //WriteLine(n2);
+            //ReadKey();
             #endregion
 
             #region Ко(контра)вариантность на пальцах
@@ -167,14 +221,22 @@ namespace Delegate.Funcs
             //Нужно найти метод:
             Func<Pet> getPet = default;
 
+            IList<Pet> gifts = new List<Pet>();
+
             //Нашёлся зоомагазин с хомячками
             Func<Hamster> getHamster = Petshop.SellHamster;
+            
             //Берём, что есть
             getPet = getHamster;
 
             //Покупаем питомца
-            Pet pet = getPet();
-            //WriteLine($"Купили питомца: {pet.GetType().Name.ToLower()}.");
+            Pet pet1 = getPet();
+            gifts.Add(pet1);
+            //WriteLine($"Купили питомца: {pet1.GetType().Name.ToLower()}.");
+            getPet = Petshop.SellCat;
+            Pet pet2 = getPet();
+            //WriteLine($"Купили питомца: {pet2.GetType().Name.ToLower()}.");
+            //ReadKey();
 
             //Задача II: кастрировать конкретного котика
             //(контра)
@@ -193,12 +255,22 @@ namespace Delegate.Funcs
             sterilize = vet.Sterilize;
 
             //Проводим операцию
-            sterilize(cat);
+            //sterilize(cat);
 
-            if (cat.Sterile)
-                WriteLine("У котика больше не будет котят(((");
+            //if (cat.Sterile)
+            //    WriteLine("У котика больше не будет котят(((");
+            //ReadKey();
             #endregion
-            
+
+            #region Ко(контра)вариантность в интерфейсах
+
+            ICovariance<object> co = new CoCat();
+
+            IContravariance<Pet> contra = new ContraPet<Pet>();
+            contra.Do(new Cat());
+            #endregion
+
+
             ReadKey();
         }
     }

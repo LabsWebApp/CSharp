@@ -12,6 +12,23 @@ namespace LINQ.Join
 
         static void Main()
         {
+
+            //List<User> users = new List<User>()
+            //{
+            //    new User { Name = "Tom", Age = 33 },
+            //    new User { Name = "Bob", Age = 30 },
+            //    new User { Name = "Tom", Age = 21 },
+            //    new User { Name = "Sam", Age = 43 }
+            //};
+
+            //var sortedUsers = //users.OrderBy(x => x.Name).ThenBy(y=>y.Age);
+            //    from u in users
+            //    orderby u.Name, u.Age
+            //    select u;
+
+            //foreach (User u in sortedUsers)
+            //    WriteLine($"{u.Name} {u.Age}");
+            //ReadKey();
             const string  noData = "[нет данных]";
             
             DbContext db = new();
@@ -20,12 +37,17 @@ namespace LINQ.Join
             //GetInfo(db.Departments);
             //GetInfo(db.Banks);
 
+            
+
             dynamic test =
                 from employee in db.Staff
                 from department in db.Departments 
                 where employee.DepartmentId == department.Id
                 select (employee.Name, department.Name);
+            
             //GetInfo(test);
+
+            //ReadKey();
 
             /*
              * INNER JOIN
@@ -36,21 +58,22 @@ namespace LINQ.Join
              */
 
             test = 
-                from employee in db.Staff
-                join department in db.Departments
-                    on employee.DepartmentId equals department.Id
-                select (employee.Name, department.Name);
+                from emp in db.Staff
+                join dep in db.Departments
+                    on emp.DepartmentId equals dep.Id
+                select (emp.Name, dep.Name);
             GetInfo(test);
+            ReadKey();
 
             test = db.Staff
                 .Join(
                     db.Departments,
                     employee => employee.DepartmentId,
                     department => department.Id, 
-                    (emp, dep) 
-                        => (emp.Name, dep.Name));
-            //GetInfo(test);
-
+                    (employee, department) 
+                        => (employee.Name, department.Name));
+            GetInfo(test);
+            ReadKey();
             /*
              * LEFT JOIN и RIGHT JOIN
              * Левое и правое соединения еще называют внешними.
@@ -66,23 +89,25 @@ namespace LINQ.Join
                 join department in db.Departments
                     on employee.DepartmentId equals department.Id
                     into dep
-                from nullDepartment in dep.DefaultIfEmpty()
-                select (employee.Name, nullDepartment?.Name ?? noData);
-            //GetInfo(testL);
-//СИСТЕМНОЕ ПРОГРАММИРОВАНИЕ продолжить от сюда!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                from departmentWithNull in dep.DefaultIfEmpty()
+                select (employee.Name, departmentWithNull?.Name ?? noData);
+           // GetInfo(testL);
+            //ReadKey();
+            
             testL = db.Staff
                 .GroupJoin(
                     db.Departments, 
-                    employee => employee.DepartmentId, department => department.Id,
+                    employee => employee.DepartmentId, 
+                    department => department.Id,
                     (employee, department) 
                         => new {employee, department})
                 .SelectMany(
                     t => t.department.DefaultIfEmpty(),
-                    (t, nullDepartment) 
-                        => (t.employee.Name, nullDepartment?.Name ?? noData));
+                    (x, nullDepartment) 
+                        => (x.employee.Name, nullDepartment?.Name ?? noData));
 
-            //GetInfo(testL);
-
+            GetInfo(testL);
+            
             //RIGHT
             var testR = 
                 from department in db.Departments
@@ -91,8 +116,10 @@ namespace LINQ.Join
                     into employee
                    from nullEmployee in employee.DefaultIfEmpty()
                 select (nullEmployee?.Name ?? noData, department.Name);
-            //GetInfo(testR);
+            
+            GetInfo(testR);
 
+            ReadKey();
             testR = db.Departments
                 .GroupJoin(db.Staff, 
                     department => department.Id, employee => employee.DepartmentId,
@@ -109,7 +136,9 @@ namespace LINQ.Join
              * Left + Right
              */
             test = testR.Union(testL);
-            //GetInfo(test);
+           GetInfo(test);
+            
+            //
 
             var testFullEmp =
                 from employee in db.Staff
@@ -125,7 +154,7 @@ namespace LINQ.Join
                     nullDepartment?.Name ?? noData,
                     nullBank?.Name ?? noData);
             
-           // GetInfo(testFullEmp);
+            GetInfo(testFullEmp);
 
             var testFullDep =
                 from department in db.Departments
@@ -140,7 +169,7 @@ namespace LINQ.Join
                 select (nullEmployee?.Name ?? noData,
                     department.Name,
                     nullBank?.Name ?? noData);
-            //GetInfo(testFullDep);
+            GetInfo(testFullDep);
 
             var testFullBank =
                 from bank in db.Banks
@@ -155,19 +184,22 @@ namespace LINQ.Join
                 select (nullEmployee?.Name ?? noData,
                     nullDepartment?.Name ?? noData,
                     bank.Name);
-            //GetInfo(testFullBank);
+            GetInfo(testFullBank);
 
-            //var testResult =
-            //    testFullEmp
-            //        .Union(testFullDep)
-            //        .Union(testFullBank)
-            //        ОЧЕНЬ ВАЖНО НЕМЕДЛЕННОЕ ВЫПОЛНЕНИЕ!!!
-            //        .ToArray();
-            //GetInfo(testResult);
+            var testResult =
+                testFullEmp
+                    .Union(testFullDep)
+                    .Union(testFullBank)
+                   //ОЧЕНЬ ВАЖНО НЕМЕДЛЕННОЕ ВЫПОЛНЕНИЕ!!!
+                    .ToArray();
 
-            //var testGroupsByBank =
-            //    from x in testResult
-            //    group x by x.Item3;
+           GetInfo(testResult);
+            
+
+
+            var testGroupsByBank =
+                from x in testResult
+                group x by x.Item3;
 
             //WriteLine("Банки:");
             //foreach (var item in testGroupsByBank)
@@ -175,12 +207,11 @@ namespace LINQ.Join
             //    WriteLine(item.Key);
             //    foreach (var res in item)
             //    {
-            //        if (res.Item1 == noData) continue;
             //        WriteLine($"\t{res.Item1}");
             //    }
             //}
             //WriteLine();
-
+            //ReadKey();
             //WriteLine("Отделы:");
             //var testGroupsByDep =
             //    from x in testResult
@@ -192,5 +223,13 @@ namespace LINQ.Join
 
             ReadKey();
         }
+        
+    }
+
+    internal class User
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public object O { get; set; }
     }
 }

@@ -13,22 +13,39 @@ namespace Delegate
     на противоположную в производных типах.
     */
 
-    class Person
+    interface IPerson
+    {
+        string Name { get; }
+        void Display();
+    }
+    class Person : IPerson
     {
         public string Name { get; init; }
-
-        //для дженериков 
         public virtual void Display() => WriteLine($"Person {Name}");
     }
 
     class Client : Person
     {
-        //для дженериков 
         public override void Display() => WriteLine($"Client {Name}");
     }
 
+    delegate void GetMessage();
+
     class Program
     {
+        private static void ShowMessage(GetMessage del)
+        {
+            del?.Invoke();
+        }
+        private static void GoodMorning()
+        {
+            Console.WriteLine("Good Morning");
+        }
+        private static void GoodEvening()
+        {
+            Console.WriteLine("Good Evening");
+        }
+
         #region ковариантность
         delegate Person PersonFactory(string name);
         static Client BuildClient(string name)
@@ -38,7 +55,7 @@ namespace Delegate
         #region контравариантность
         delegate void ClientInfo(Client client);
 
-        static void GetPersonInfo(Person p)
+        static void GetPersonInfo(IPerson p)
             =>
                 WriteLine($"Имя: {p.Name} ({p.GetType().FullName})");
         #endregion
@@ -54,7 +71,7 @@ namespace Delegate
         delegate void GetInfo<in T>(T item);
 
         static void DisplayPersonInfo(Person p) => p.Display();
-        static void DisplayClientInfo(Client cl) => cl.Display();
+       // static void DisplayClientInfo(Client cl) => cl.Display();
         #endregion
 
         #region "делегат делегата"
@@ -67,16 +84,44 @@ namespace Delegate
 
         static void Main()
         {
+            //GetMessage del;
+            //del = delegate
+            //{
+            //    WriteLine("gfhggh");
+            //    WriteLine("jhkjhjk");
+            //};
+
+            //del -= GoodMorning;
+            //del += GoodMorning;
+            //del();
+            //del -= GoodMorning;
+            //del();
+            //ReadKey();
+            //if (DateTime.Now.Hour < 12)
+            //{
+            //    Show_Message(GoodMorning);
+            //}
+            //else
+            //{
+            //    Show_Message(GoodEvening);
+            //}
+
+            //ReadKey();
+
             #region ковариантность
             PersonFactory personDelegate;
             personDelegate = BuildClient; // 
             var p = personDelegate("Петя");
+            //p.Display();
             //WriteLine($"Имя: {p.Name} ({p.GetType().FullName})");
+            //ReadKey();
             #endregion
 
             #region контравариантность
             ClientInfo clientInfo = GetPersonInfo;
             Client client = new Client { Name = "Маша" };
+            clientInfo.Invoke(client);
+            ReadKey();
 
             //clientInfo(client);
             /*
@@ -113,7 +158,7 @@ namespace Delegate
             Client contraClient = new Client { Name = "Мая" };
             //displayClientInfo(contraClient); //
 
-            Person p1 = new Person{Name = "Саша"};
+            var p1 = new Person {Name = "Саша"};
             //displayClientInfo((Client)p1);
             #endregion
 

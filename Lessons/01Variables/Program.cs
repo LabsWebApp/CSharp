@@ -51,6 +51,10 @@ namespace Variables
 
         static void Main(string[] args)
         {
+            WriteLine(DateTime.Now.AddDays(90));
+            var dva = Math.Sqrt(2) * Math.Sqrt(2);
+            WriteLine(dva);
+            ReadKey();
             //int i = 
             //int i = Int32.MaxValue;
             //int j = checked(i + 1);
@@ -74,18 +78,18 @@ namespace Variables
             //a1.i = 99;
             //WriteLine(a.i);
 
-           // string s = "";
+            // string s = "";
             //s = null;
             //WriteLine(s.GetHashCode());
             //char c = 'd';
-           // WriteLine(c.GetHashCode());
+            // WriteLine(c.GetHashCode());
 
 
-           //float f = 0.1f;
+            //float f = 0.1f;
             //WriteLine(f.GetHashCode());
             //WriteLine(int.MinValue);
             //A a1 = new(), a2 = new();
-             //var v = a1 > a;
+            //var v = a1 > a;
             //Console.WriteLine(comparer(4, 5));
             //object o = new();
 

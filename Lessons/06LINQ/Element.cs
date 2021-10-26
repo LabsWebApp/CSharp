@@ -6,7 +6,7 @@ namespace LINQ
     {
         public Guid Id { get; } = Guid.NewGuid();
 
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         public int Number { get; init; }
     }
