@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
-using UseGC;
 using static System.Console;
 
 namespace Variables
@@ -27,18 +24,18 @@ namespace Variables
         static void f(int i)
         {
             i = 9;
-            Console.WriteLine($"i = {i}");
+            WriteLine($"i = {i}");
         }
 
-        static void f(System.String i)
+        static void f(String i)
         {
             i = "9";
-            Console.WriteLine($"i = {i}");
+            WriteLine($"i = {i}");
         }
         static void f(A a)
         {
             a.i = 9;
-            Console.WriteLine($"i = {a.i}");
+            WriteLine($"i = {a.i}");
         }
 
         static EnumComparer comparer(float l, float r)

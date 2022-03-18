@@ -1,5 +1,4 @@
-﻿using System;
-using static System.Console;
+﻿using static System.Console;
 
 namespace Delegate
 {
@@ -39,11 +38,11 @@ namespace Delegate
         }
         private static void GoodMorning()
         {
-            Console.WriteLine("Good Morning");
+            WriteLine("Good Morning");
         }
         private static void GoodEvening()
         {
-            Console.WriteLine("Good Evening");
+            WriteLine("Good Evening");
         }
 
         #region ковариантность

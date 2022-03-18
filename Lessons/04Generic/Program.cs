@@ -140,7 +140,7 @@ namespace _04Generic
             //    new Transaction<Account>();
             //depAccTransaction.DoOperation(new DepositAccount(), 450);
 
-            Console.Read();
+            Read();
         }
     }
 }

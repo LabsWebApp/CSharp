@@ -1,10 +1,4 @@
-﻿using System;
-using static System.Console;
-using System.Drawing;
-using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
-using UseGC;
+﻿using static System.Console;
 
 namespace Classes
 {

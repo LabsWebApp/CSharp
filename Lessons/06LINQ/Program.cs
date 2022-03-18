@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using static System.Console;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace LINQ
 {

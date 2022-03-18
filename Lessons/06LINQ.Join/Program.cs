@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using static System.Console;
 
@@ -62,8 +61,8 @@ namespace LINQ.Join
                 join dep in db.Departments
                     on emp.DepartmentId equals dep.Id
                 select (emp.Name, dep.Name);
-            GetInfo(test);
-            ReadKey();
+            //GetInfo(test);
+            //ReadKey();
 
             test = db.Staff
                 .Join(
@@ -72,8 +71,8 @@ namespace LINQ.Join
                     department => department.Id, 
                     (employee, department) 
                         => (employee.Name, department.Name));
-            GetInfo(test);
-            ReadKey();
+            //GetInfo(test);
+            //ReadKey();
             /*
              * LEFT JOIN и RIGHT JOIN
              * Левое и правое соединения еще называют внешними.
@@ -91,8 +90,8 @@ namespace LINQ.Join
                     into dep
                 from departmentWithNull in dep.DefaultIfEmpty()
                 select (employee.Name, departmentWithNull?.Name ?? noData);
-           // GetInfo(testL);
-            //ReadKey();
+            //GetInfo(testL);
+            //
             
             testL = db.Staff
                 .GroupJoin(
@@ -107,7 +106,7 @@ namespace LINQ.Join
                         => (x.employee.Name, nullDepartment?.Name ?? noData));
 
             GetInfo(testL);
-            
+            ReadKey();
             //RIGHT
             var testR = 
                 from department in db.Departments
@@ -117,7 +116,7 @@ namespace LINQ.Join
                    from nullEmployee in employee.DefaultIfEmpty()
                 select (nullEmployee?.Name ?? noData, department.Name);
             
-            GetInfo(testR);
+            //GetInfo(testR);
 
             ReadKey();
             testR = db.Departments
@@ -137,7 +136,8 @@ namespace LINQ.Join
              */
             test = testR.Union(testL);
            GetInfo(test);
-            
+           ReadKey();
+
             //
 
             var testFullEmp =
