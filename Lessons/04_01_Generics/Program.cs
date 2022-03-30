@@ -18,6 +18,6 @@ class Class<T>
 {
     public T field;
 
-    public void Method() => Console.WriteLine(field?.GetType().ToString() ??
-                                              "Какой-то ссылочный тип");
+    public void Method() => 
+        Console.WriteLine(field?.GetType().FullName ?? "Какой-то ссылочный тип");
 }

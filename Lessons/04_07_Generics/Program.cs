@@ -1,19 +1,28 @@
 ﻿// Ковариантность обобщений. (delegate)
 
 Pet? pet;
-Petshop shop = new Petshop();
-
 Delegate<Pet>? delegatePet;
-Delegate<Cat> delegateCat = new Delegate<Cat>(shop.CatCreator);
 
-delegatePet = delegateCat;    // От производного к базовому.                      
+Petshop shop = new Petshop();
+Delegate<Cat> delegateCat = new Delegate<Cat>(shop.CatCreator);
+Delegate<Dog> delegateDog = shop.DogCreator;
+
+
+
+delegatePet = delegateCat;    // От производного к базовому.
+                              // ****
+delegatePet = delegateDog;    // От производного к базовому.
+                              // ***
+delegatePet = delegateCat;
+
 pet = delegatePet.Invoke();
 
-Console.WriteLine(pet.GetType().Name);
+Console.WriteLine("Мы купили: " + pet.GetType().Name);
 
 abstract class Pet { }
 class Cat : Pet { }
 class Dog : Pet { }
+class Hamster : Pet { }
 
 class Petshop
 {
@@ -21,12 +30,4 @@ class Petshop
     public Dog DogCreator() => new Dog();
 }
 
-delegate T Delegate<out T>();   // out - Для возвращаемого значения.
-
-
-
-
-
-
-//Func<Pet> getPet = shop.CatCreator;
-//pet = getPet.Invoke();
+delegate TResult Delegate<out TResult>();   // out - Для возвращаемого значения.

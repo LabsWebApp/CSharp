@@ -1,4 +1,11 @@
 ﻿// Контравариантность обобщений.
+Circle circle = new Circle();
+
+IContainer<Circle> container = new Container<Shape>(circle);
+//IContainer<Circle> container = new Container<Circle>(circle);
+
+Console.WriteLine(container);
+
 
 public abstract class Shape { }
 public class Circle : Shape { }
@@ -23,8 +30,5 @@ public class Container<T> : IContainer<T>
         set => _figure = value;
     }
 
-    public override string ToString()
-    {
-        return _figure.GetType().ToString();
-    }
+    public override string ToString() => _figure!.GetType().ToString();
 }

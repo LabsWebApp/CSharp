@@ -22,12 +22,10 @@ class Programm
         
         Delegate1 delegate1 = new Delegate1(Method1);
 
-        //Delegate2 action = delegate1.Invoke();
+       // Delegate2 delegate2 = delegate1.Invoke();
 
-        Delegate2 delegate2 = delegate1.Invoke();
-
-        //delegate1();
-        delegate2();
+        delegate1.Invoke().Invoke();
+       // delegate2();
 
         // Delay.
         Console.ReadKey();

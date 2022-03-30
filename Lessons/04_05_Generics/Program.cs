@@ -5,7 +5,7 @@ Circle circle = new Circle();
 IContainer<Shape> container = new Container<Shape>(circle);
 //IContainer<Circle> container = new Container<Circle>(circle);
 
-Console.WriteLine(container.Figure.ToString());
+Console.WriteLine(container.Figure.GetType().FullName);
 
 
 public abstract class Shape { }

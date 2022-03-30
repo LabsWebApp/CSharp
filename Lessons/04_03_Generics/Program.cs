@@ -10,9 +10,9 @@ instance.Method(55);
 
 class A
 {
-    public void Method<T1>(T1 argument)
+    public void Method<T>(T argument)
     {
-        T1 variable = argument;
+        T variable = argument;
         Console.WriteLine($"{variable} - {variable!.GetType()}");
     }
 }

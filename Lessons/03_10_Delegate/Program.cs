@@ -7,10 +7,8 @@ delegate string Delegate3();
 
 class Program
 {
-    public static Delegate3 MethodF(Delegate1 delegate1, Delegate2 delegate2)
-    {
-        return delegate { return delegate1.Invoke() + delegate2.Invoke(); };
-    }
+    public static Delegate3 MethodF(Delegate1 delegate1, Delegate2 delegate2) =>
+        () => delegate1.Invoke() + delegate2.Invoke();
 
     public static string Method1() { return "Hello "; }
     public static string Method2() { return "world!"; }

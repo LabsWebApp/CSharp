@@ -1,5 +1,4 @@
-﻿
-
+﻿Console.WriteLine("bmbjkb");
 class Generics<Type1, Type2>
 {
     // Поля
