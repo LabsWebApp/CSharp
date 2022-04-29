@@ -43,7 +43,7 @@ class Program
             c = a + b;
         };
 
-        simpleDelegate.Invoke(ref summand1, in summand2, out int sum);
+        simpleDelegate.Invoke(ref summand1, in summand2, out var sum);
 
         WriteLine($"{summand1} + {summand2} = {sum}");
 

@@ -1,11 +1,11 @@
 ﻿// Так делать нельзя!!!
 
-A<int> aInt = new A<int>();
-int sum = aInt.Add(2, 3);
+var aInt = new A<int>();
+var sum = aInt.Add(2, 3);
 Console.WriteLine(sum);
 
-A<object> aObj = new A<object>();
-object res = aObj.Add(2, 3);
+var aObj = new A<object>();
+var res = aObj.Add(2, 3);
 Console.WriteLine(res);
 
 

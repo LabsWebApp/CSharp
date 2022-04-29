@@ -6,13 +6,13 @@ static string Concatenation(string s) => "Привет, " + s + "!";
 
 
 
-Delegate<int, int> delegate1 = new Delegate<int, int>(Double);
+var delegate1 = new Delegate<int, int>(Double);
 
-int i = delegate1.Invoke(5);
+var i = delegate1.Invoke(5);
 Console.WriteLine(i);
 
-Delegate<string, string> delegate2 = new Delegate<string, string>(Concatenation);
-string s = delegate2("Alex");
+var delegate2 = new Delegate<string, string>(Concatenation);
+var s = delegate2("Alex");
 Console.WriteLine(s);
 
 

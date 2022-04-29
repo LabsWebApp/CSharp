@@ -3,8 +3,8 @@
 Pet? pet;
 Delegate<Pet>? delegatePet;
 
-Petshop shop = new Petshop();
-Delegate<Cat> delegateCat = new Delegate<Cat>(shop.CatCreator);
+var shop = new Petshop();
+var delegateCat = new Delegate<Cat>(shop.CatCreator);
 Delegate<Dog> delegateDog = shop.DogCreator;
 
 

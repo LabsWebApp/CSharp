@@ -17,7 +17,7 @@ simpleDelegate -= (a, b) =>
 };
 
 
-int summand1 = 1;
+var summand1 = 1;
 double summand2 = 2.5, sum = 0;
 
 sum = simpleDelegate(summand1, summand2);

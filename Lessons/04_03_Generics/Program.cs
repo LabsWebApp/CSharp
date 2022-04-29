@@ -1,6 +1,6 @@
 ﻿// Универсальные шаблоны. (Универсальный метод)
 
-A instance = new A();
+var instance = new A();
 
 instance.Method<string>("Hello world!");
 
@@ -12,7 +12,7 @@ class A
 {
     public void Method<T>(T argument)
     {
-        T variable = argument;
+        var variable = argument;
         Console.WriteLine($"{variable} - {variable!.GetType()}");
     }
 }

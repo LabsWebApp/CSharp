@@ -1,7 +1,7 @@
 ﻿// Ковариантность обобщений. (delegate)
 
 Pet? pet;
-Petshop shop = new Petshop();
+var shop = new Petshop();
 
 Func<Pet> getPet = shop.CatCreator;
 pet = getPet.Invoke();

@@ -1,11 +1,15 @@
-﻿namespace Delegate.Events.Realease.Handlers;
+﻿namespace Delegate.Events.Release.Handlers;
 
 // ReSharper disable once IdentifierTypo
-public class Kolya : IThresholdReachedHandler
+public class Kolya : IZeroHourReachedHandler
 {
-    public void ThresholdReached(object sender, ThresholdReachedEventArgs e)
+    public void ZeroHourReached(object? sender, ZeroHourReachedEventArgs e)
     {
-        if (sender is not Ticker { Name: "MessagesTicker" } ticker) return;
+        if (sender is not Ticker
+            {
+                Name: "MessagesTicker" or "messagesTicker" or "_messagesTicker"
+            } ticker) return;
+
         WriteLine($"[{ticker.Name}:]");
         WriteLine("    0                        0");
         WriteLine("   00                        00");
@@ -17,6 +21,6 @@ public class Kolya : IThresholdReachedHandler
         WriteLine("   00                        00");
         WriteLine("    0                        0");
         WriteLine(
-            $"{nameof(Vasja)}: Пора в качалку! Ведь уже {e.TimeReached.ToShortTimeString()}\n");
+            $"{nameof(Kolya)}: Пора в качалку! Ведь уже {e.ZeroHour} (реальное время: {e.ReachedTime.ToLongTimeString()})\n");
     }
 }

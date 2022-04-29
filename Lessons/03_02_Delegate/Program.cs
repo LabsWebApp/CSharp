@@ -18,7 +18,7 @@ class Programm
     {
 
         Delegate simpleDelegate = null;//== null
-        SimpleClass instance = new SimpleClass();
+        var instance = new SimpleClass();
 
         simpleDelegate = instance.Method; // Создаем экземпляр делегата. (2)
         simpleDelegate += SimpleClass.StaticMethod;

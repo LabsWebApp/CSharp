@@ -20,7 +20,7 @@ namespace Delegate.Funcs
         #region Func
         static int GetInt(int x, Func<int, int> retF)
         {
-            int result = 0;
+            var result = 0;
             if (x > 0)
                 result = retF(x);
             return result;
@@ -28,8 +28,8 @@ namespace Delegate.Funcs
 
         static int Factorial(int x)
         {
-            int result = 1;
-            for (int i = 1; i <= x; i++) result *= i;
+            var result = 1;
+            for (var i = 1; i <= x; i++) result *= i;
             return result;
         }
         #endregion
@@ -222,17 +222,17 @@ namespace Delegate.Funcs
             IList<Pet> gifts = new List<Pet>();
 
             //Нашёлся зоомагазин с хомячками
-            Func<Hamster> getHamster = Petshop.SellHamster;
+            var getHamster = Petshop.SellHamster;
             
             //Берём, что есть
             getPet = getHamster;
 
             //Покупаем питомца
-            Pet pet1 = getPet();
+            var pet1 = getPet();
             gifts.Add(pet1);
             //WriteLine($"Купили питомца: {pet1.GetType().Name.ToLower()}.");
             getPet = Petshop.SellCat;
-            Pet pet2 = getPet();
+            var pet2 = getPet();
             //WriteLine($"Купили питомца: {pet2.GetType().Name.ToLower()}.");
             //ReadKey();
 
@@ -240,7 +240,7 @@ namespace Delegate.Funcs
             //(контра)
 
             //Создаём(берём) котика
-            Cat cat = new Cat();
+            var cat = new Cat();
             
             //Нужно найти метод:
             Action<Cat> sterilize = default;

@@ -1,102 +1,225 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+using System.Numerics;
 using static System.Console;
 
-namespace Enumerations
+namespace Enumerations.Index;
+
+
+public record class Item(string Name, int Id);
+
+public class UserCollection
 {
-    public record Item
-    {
-        public int Id { get; init; }
-        public string Name { get; init; }
+    private int _position = -1;
 
-        //public override string ToString()
-        //    => $"ID = {Id}, Name = {Name}.";
+    private readonly Item[] _items =
+    {
+        new ("Petya", 13),
+        new ("Petya", 12),
+        new ("B", 11),
+        new ("C", 10)
+    };
+
+    public UserCollection GetEnumerator()
+    {
+        _position = -1;
+        return this;
     }
 
-    class Program
+    public bool MoveNext()
     {
-        public class UserCollection : IEnumerable, IEnumerator
+        if (_position < _items.Length - 1)
         {
-            private int _position = -1;
+            _position++;
+            return true;
+        }
+        return false;
+    }
 
-            private readonly Item[] _items =
-            {
-                new (){Name = "A", Id = 0},
-                new (){Name = "A", Id = 1},
-                new (){Name = "B", Id = 2},
-                new (){Name = "C", Id = 3}
-            };
+    public Item Current => _items[_position];
 
-            public IEnumerator GetEnumerator()
+    internal string this[int id]
+    {
+        get
+        {
+            foreach (var item in _items)
+                if (item.Id == id) return item.Name;
+
+            throw new IndexOutOfRangeException();
+        }
+        set
+        {
+            for (var i = 0; i < _items.Length; i++)
             {
-                Reset();
-                return this;
+                if (_items[i].Id != id) continue;
+
+                _items[i] = _items[i] with { Name = value };
+                return;
             }
-            public bool MoveNext()
+            throw new IndexOutOfRangeException();
+        }
+    }
+
+    public IEnumerable<Item> this[string name]
+    {
+        get
+        {
+            foreach (var item in _items)
             {
-                if (_position < _items.LongLength - 1)
-                {
-                    _position++;
-                    return true;
-                }
-                return false;
-            }
-
-            public void Reset() => _position = -1;
-
-            public object Current => _items[_position];
-
-            public Item this[int ind]
-            {
-                get
-                {
-                    foreach (var item in _items)
-                    {
-                        if (item.Id == ind)
-                            return item;
-                    }
-
-                    throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            public IEnumerable<Item> this[string name]
-            {
-                get
-                {
-                    foreach (var item in _items)
-                    {
-                        if (item.Name == name)
-                            yield return item;
-                    }
-                }
+                if (item.Name.ToLower().Trim() == name.ToLower().Trim()) 
+                    yield return item;
             }
         }
+    }
+}
 
-        static void Main(string[] args)
+//public class UserCollection //: IEnumerable, IEnumerator
+//{
+//    private int _position = -1;
+
+//    private readonly Item[] _items =
+//    {
+//        new ("Petya", 3),
+//        new ("Petya", 2),
+//        new ("B", 1),
+//        new ("C", 0)
+//    };
+
+//    public UserCollection GetEnumerator()
+//    {
+//        _position = -1;
+//        return this;
+//    }
+//    public bool MoveNext()
+//    {
+//        if (_position < _items.LongLength - 1)
+//        {
+//            _position++;
+//            return true;
+//        }
+//        return false;
+//    }
+
+//    public object Current => _items[_position];
+
+//    public Item this[int ind] //=> _items[ind];
+//    {
+//        get
+//        {
+//            foreach (var item in _items)
+//                if (item.Id == ind) return item;
+
+//            throw new ArgumentOutOfRangeException();
+//        }
+//    }
+
+//    public IEnumerable this[string name]
+//    {
+//        get
+//        {
+//            foreach (var item in _items)
+//            {
+//                if (item.Name == name)
+//                    yield return item;
+//            }
+//        }
+//    }
+//}
+class Program
+{
+    static void Main()
+    {
+        EndlessCollection collection = new();
+
+        //foreach (var item in collection)
+        //{
+        //    Console.
+        //}
+        WriteLine(collection[ushort.MaxValue]);
+
+        ReadKey();
+
+
+        UserCollection a = new();
+
+        for (int i = 10; i <= 13; i++)
         {
-            UserCollection a = new();
+            WriteLine(a[i]);
+        }
 
-            foreach (var item in a) WriteLine(item);
+        WriteLine("*****+*****");
 
-            WriteLine("*****+*****");
-            
-            foreach (var item in a["A"]) 
-                WriteLine(item);
-            WriteLine("*****+*****");
-            var witha = a["a"];
+        var masha = a["Masha"];
+        WriteLine(masha);
+        foreach (var item in masha)
+            WriteLine(item);
+        WriteLine("*****+*****");
 
-            foreach (var item in witha)
-                WriteLine(item);
+        a[11] = "Masha";
+        foreach (var item in masha)
+            WriteLine(item);
+        WriteLine("*****+*****");
+
+        for (int i = 10; i <= 13; i++)
+        {
+            WriteLine(a[i]);
+        }
+        WriteLine("*****+*****");
+
+        foreach (var item in a["Petya"]) 
+            WriteLine(item);
+        WriteLine("*****+*****");
+
+        var withPetya = a["Petya"];
+
+        foreach (var item in withPetya)
+            WriteLine(item);
            
-            WriteLine(witha);
+        WriteLine(withPetya.GetType().FullName);
+        WriteLine(withPetya.GetType().Name);
 
-            WriteLine("*****+*****");
-            WriteLine(a[3]);
-            ReadKey();
+        WriteLine("*****+*****");
 
+        withPetya = a["k"];
+
+        foreach (var item in withPetya)
+            WriteLine(item);
+        WriteLine(withPetya.GetType().FullName);
+        WriteLine(withPetya.GetType().Name);
+
+        ReadKey();
+
+        EndlessCollection col = new();
+        WriteLine(col[1000]);
+
+    }
+}
+
+class EndlessCollection
+{
+    private BigInteger _first = BigInteger.Zero;
+
+    private IEnumerable<BigInteger> GetEnumerable()
+    {
+        while (true) yield return _first++;
+    }
+
+    public IEnumerator<BigInteger> GetEnumerator() => GetEnumerable().GetEnumerator();
+
+    public int this[ushort index]
+    {
+        get
+        {
+            foreach (var b in this)
+                if (b == index) return (int)b;
+            return 0;
         }
     }
 
+    public IEnumerable<BigInteger> this[(BigInteger From, BigInteger To) range]
+    {
+        get
+        {
+            for (var b = range.From; b <= range.To; b++) yield return b;
+        }
+    }
 }

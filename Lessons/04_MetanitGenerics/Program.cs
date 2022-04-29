@@ -19,7 +19,7 @@ internal class Program
         MessageBuilder<EmailMessage> eMessageBuilder = WriteEmailMessage;
 
         MessageBuilder<Message> messageBuilder = eMessageBuilder;     // ковариантность
-        Message message = messageBuilder("hello Tom"); // вызов делегата
+        var message = messageBuilder("hello Tom"); // вызов делегата
         message.Print(); // Email: hello Tom
 
         // контравариантность
@@ -37,7 +37,7 @@ internal class Program
         MessageConverter<Message, EmailMessage> fConverter = ConvertToEmail;
 
         MessageConverter<SmsMessage, Message> converter = fConverter;
-        Message messageMix = converter(new SmsMessage("Delegates"));
+        var messageMix = converter(new SmsMessage("Delegates"));
         messageMix.Print();    // Email: Delegates
 
 
@@ -46,14 +46,14 @@ internal class Program
 
 
         // *********************
-        TextMsg msg = new TextMsg("ПРИВЕТ");
+        var msg = new TextMsg("ПРИВЕТ");
         Send<TextMsg>? sendText;
 
         FindSender<Sender>? tool;
         FindSender<Pc> pc = Searcher.FindPc;
 
         tool = pc;
-        Sender sender = tool.Invoke();
+        var sender = tool.Invoke();
         Send<ContextMsg> send = sender.Send;
 
         sendText = send;

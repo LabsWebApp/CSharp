@@ -21,14 +21,14 @@ class Programm
     public static void Main()
     {
         Delegate baseDelegate;
-        Delegate simpleDelegate1 = new Delegate(Method1);
+        var simpleDelegate1 = new Delegate(Method1);
         Delegate simpleDelegate2 = Method2;
         Delegate simpleDelegate3 = Method3;
 
         IntDelegate intDelegate1 = Method4;
         IntDelegate intDelegate2 = Method4;
 
-        IntDelegate baseIntDelegate = intDelegate1 + intDelegate2;
+        var baseIntDelegate = intDelegate1 + intDelegate2;
 
         WriteLine(baseIntDelegate.Invoke(0));
         WriteLine("*****");
@@ -44,7 +44,7 @@ class Programm
         while (true)
         {
             WriteLine("Введите число от 1 до 8");
-            string? choice = ReadLine();
+            var choice = ReadLine();
 
             switch (choice)
             {
@@ -65,25 +65,25 @@ class Programm
                 }
                 case "4":
                 {
-                    Delegate simpleDelegate4 = (baseDelegate - simpleDelegate1)!;
+                    var simpleDelegate4 = (baseDelegate - simpleDelegate1)!;
                     simpleDelegate4.Invoke();
                     break;
                 }
                 case "5":
                 {
-                    Delegate simpleDelegate5 = (baseDelegate - simpleDelegate2)!;
+                    var simpleDelegate5 = (baseDelegate - simpleDelegate2)!;
                     simpleDelegate5.Invoke();
                     break;
                 }
                 case "6":
                 {
-                    Delegate simpleDelegate6 = (baseDelegate - simpleDelegate3)!;
+                    var simpleDelegate6 = (baseDelegate - simpleDelegate3)!;
                     simpleDelegate6.Invoke();
                     break;
                 }
                 case "7":
                 {
-                    Delegate simpleDelegate7 = (baseDelegate - simpleDelegate3 - simpleDelegate1 - simpleDelegate2);
+                    var simpleDelegate7 = (baseDelegate - simpleDelegate3 - simpleDelegate1 - simpleDelegate2);
                     WriteLine(simpleDelegate7 is object);
                     simpleDelegate7?.Invoke();
                     break;

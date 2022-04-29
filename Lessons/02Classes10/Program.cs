@@ -190,12 +190,12 @@ WriteLine(o1);
 */
 //Композиция и агрегация
 
-Car car = new Car();
+var car = new Car();
 car.Drive();
-Grenade grenade = new Grenade();
+var grenade = new Grenade();
 
-Car AgrCar = new Car(grenade);
-Room room = new Room(grenade);
+var AgrCar = new Car(grenade);
+var room = new Room(grenade);
 
 class Car
 {
@@ -224,7 +224,7 @@ class Car
     public void Drive()
     {
         Engine?.Drive();
-        for (int i = 0; i < Wheels?.Length; i++)
+        for (var i = 0; i < Wheels?.Length; i++)
         {
             Wheels[i].Drive();
         }

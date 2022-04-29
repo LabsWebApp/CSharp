@@ -40,7 +40,7 @@ class Programm
         //Predicate<char> predicate = ch => ch == ' ';
         CheckChar check;
 
-        string exp = "6776rgAAaaah00bbbzzjbhjZZZbzsgfSFGH25856!!!!&&0&";
+        var exp = "6776rgAAaaah00bbbzzjbhjZZZbzsgfSFGH25856!!!!&&0&";
         Console.WriteLine(exp);
 
         bool CheckElement(char ch) => ch is >= 'a' and <= 'z' or >= 'A' and <= 'Z';
@@ -76,10 +76,10 @@ class Programm
 
     static string CheckString(CheckChar ch, string source)
     {
-        string result = string.Empty;
+        var result = string.Empty;
         ch = c => c == 0;
 
-        for (int i = 0; i < source.Length; i++)
+        for (var i = 0; i < source.Length; i++)
         {
             if (ch(source[i])) result += source[i];
         }

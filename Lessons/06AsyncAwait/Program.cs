@@ -9,8 +9,8 @@ namespace AsyncAwait
     {
         static void Factorial()
         {
-            int result = 1;
-            for (int i = 1; i <= 6; i++)
+            var result = 1;
+            for (var i = 1; i <= 6; i++)
             {
                 result *= i;
             }
@@ -39,7 +39,7 @@ namespace AsyncAwait
             FactorialAsync();   // вызов асинхронного метода
 
             WriteLine("Введите число: ");
-            int n = Parse(ReadLine() ?? string.Empty);
+            var n = Parse(ReadLine() ?? string.Empty);
             WriteLine($"Квадрат числа равен {n * n}");
 
             Read();

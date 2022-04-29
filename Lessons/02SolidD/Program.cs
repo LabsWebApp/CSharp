@@ -28,7 +28,7 @@ class ConsolePrinter
 */
 //Верно
 
-Book book = new Book(new ConsolePrinter());
+var book = new Book(new ConsolePrinter());
 book.Print();
 book.Printer = new HtmlPrinter();
 book.Print();

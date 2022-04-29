@@ -15,9 +15,9 @@ class Program
 
     static void Main()
     {
-        Functional functional = new Functional(MethodF);
+        var functional = new Functional(MethodF);
 
-        Delegate3 delegate3 = functional.Invoke(new Delegate1(Method1), new Delegate2(Method2));
+        var delegate3 = functional.Invoke(new Delegate1(Method1), new Delegate2(Method2));
 
         Console.WriteLine(delegate3.Invoke());
 

@@ -1,6 +1,6 @@
 ﻿// Ковариантность обобщений.
 
-Circle circle = new Circle();
+var circle = new Circle();
 
 IContainer<Shape> container = new Container<Shape>(circle);
 //IContainer<Circle> container = new Container<Circle>(circle);

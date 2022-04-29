@@ -83,7 +83,7 @@ namespace _04Generic
         //}
         static void Main(string[] args)
         {
-            A<int> a = new A<int>
+            var a = new A<int>
             {
                 Properties = new[] {-1, 55, 888, -99}
             };

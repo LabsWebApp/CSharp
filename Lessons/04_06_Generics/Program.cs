@@ -1,5 +1,5 @@
 ﻿// Контравариантность обобщений.
-Circle circle = new Circle();
+var circle = new Circle();
 
 IContainer<Circle> container = new Container<Shape>(circle);
 //IContainer<Circle> container = new Container<Circle>(circle);

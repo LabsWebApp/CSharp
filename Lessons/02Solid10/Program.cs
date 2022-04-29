@@ -4,13 +4,13 @@
 
 //Модель данных
 
-DataManager manager = new DataManager();
+var manager = new DataManager();
 manager.SetUsers(new AccessUserRep());
 
 
 var users = manager.Users;
 
-for (int i = 0; i < users.Users.Length; i++)
+for (var i = 0; i < users.Users.Length; i++)
 {
     Console.WriteLine($"Name = {users.Users[i]?.Name} ({users.Users[i]?.Id})");
 }

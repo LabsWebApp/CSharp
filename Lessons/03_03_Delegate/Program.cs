@@ -22,7 +22,7 @@ class Programm
 {
     public static void Main()
     {
-        SimpleClass instance = new SimpleClass();
+        var instance = new SimpleClass();
 
         Delegate simpleDelegate = instance.Method; // Создаем экземпляр делегата и сообщаем с ним метод. (2)
 
@@ -31,7 +31,7 @@ class Programm
 
         WriteLine(greeting);
 
-        int i = 55;
+        var i = 55;
         greeting = simpleDelegate(i); // Другой способ вызова метода сообщенного с делегатом. (3')
 
         WriteLine(greeting);

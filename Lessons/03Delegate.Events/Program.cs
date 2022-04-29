@@ -13,31 +13,33 @@ namespace Delegate.Events;
 public delegate void MethodContainer();
 public class ClassCounter
 {
-    private readonly short _zeroHour;
-
     //Событие OnCount c типом делегата MethodContainer.
     public event MethodContainer OnCount;
+    
+    private readonly short _zeroHour;
 
     public ClassCounter(short zeroHour = 8)
     {
         _zeroHour = zeroHour;
-        SetControl();
+        //SetControl();
     }
 
     private short _count;
-
+     
     public void Count()
     {
         while (true)
         {
             _count++;
             Thread.Sleep(1000);
+
             if (_count % _zeroHour == 0) OnCount?.Invoke();
+            //if (_count % _zeroHour == 0) Invoker();
         }
         // ReSharper disable once FunctionNeverReturns
     }
 
-    //protected virtual void Invoker() => OnCount?.Invoke();
+    protected virtual void Invoker() => OnCount?.Invoke();
 
     public void SetControl()
     {
@@ -94,8 +96,10 @@ internal class Program
     private static void M() => WriteLine("Mmmmmmmmmm.....");
     static void Main()
     {
-       // SetWindowSize(1,1);
         ClassCounter counter = new();
+
+        // SetWindowSize(1,1);
+
         //counter.SetControl();
         //counter.Count(); 
 
@@ -104,11 +108,11 @@ internal class Program
 
         //Подписались на событие
         counter.OnCount += vasja.VMessage;
-        counter.OnCount -= vasja.VMessage;
+        //counter.OnCount -= vasja.VMessage;
         //counter.OnCount += kolya.KMessage;
         counter.OnCount += kolya.KMessage;
         counter.OnCount += M;
-
+        
         counter.Count();
     }
 }

@@ -4,17 +4,17 @@ using System.Collections;
 
 namespace Enumerations.Index
 {
-    public class UserCollection : IEnumerator, IEnumerable
+    public class UserCollection //: IEnumerable, IEnumerator
     {
-        private int i = 99;
-        private object o = new();
-        private string s = "Hi";
+        private readonly int i = 99;
+        private readonly object o = new();
+        private readonly string s = "Hi";
         
         private int _position = -1;
-        private const int len = 3;
+        private const int Len = 3;
         public bool MoveNext()
         {
-            if (_position < len - 1)
+            if (_position < Len - 1)
             {
                 _position++;
                 return true;
@@ -30,12 +30,12 @@ namespace Enumerations.Index
             0 => i,
             1 => o,
             2 => s,
-            _ => throw new IndexOutOfRangeException()
+            _ => throw new InvalidOperationException()
         };
 
-        public IEnumerator GetEnumerator()
+        public UserCollection GetEnumerator()
         {
-            //Reset();
+            Reset();
             return this;
         }
 
@@ -49,9 +49,9 @@ namespace Enumerations.Index
 
         public object this[string type] => type switch
         {
-            "int" => i,
-            "object" => o,
-            "string" => s,
+            "int" or "Int32" or "System.Int32" => i,
+            "object" or "Object" or "System.Object" => o,
+            "string" or "String" or "System.String" => s,
             _ => throw new IndexOutOfRangeException()
         };
     }
@@ -61,15 +61,8 @@ namespace Enumerations.Index
         
         static void Main(string[] args)
         {
-            Lazy<UserCollection> obj = new Lazy<UserCollection>();
 
-            if (DateTime.Now.Hour < 9) WriteLine(obj.Value[0]);
-
-
-
-
-
-            UserCollection userCollection = new UserCollection();
+            var userCollection = new UserCollection();
             foreach (var item in userCollection)
             {
                 WriteLine(item);
@@ -79,11 +72,10 @@ namespace Enumerations.Index
             WriteLine(userCollection[2]);
             WriteLine(userCollection[0]);
             WriteLine(userCollection[1]);
-
             WriteLine("**********************");
-            WriteLine(userCollection["object"]);
+            WriteLine(userCollection["Object"]);
             WriteLine(userCollection["string"]);
-            WriteLine(userCollection["int"]);
+            WriteLine(userCollection["System.Int32"]);
 
             ReadKey();
         }

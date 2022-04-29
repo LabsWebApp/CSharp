@@ -2,10 +2,10 @@
 
 using static System.Console;
 
-Cat cat = new Cat();
+var cat = new Cat();
 Delegate<Cat>? sCat = null;
 
-Vet vet = new Vet();
+var vet = new Vet();
 Delegate<Pet> sPet = vet.Sterilize;
 
 sCat = sPet;

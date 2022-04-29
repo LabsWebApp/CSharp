@@ -118,7 +118,7 @@ namespace Delegate
 
             #region контравариантность
             ClientInfo clientInfo = GetPersonInfo;
-            Client client = new Client { Name = "Маша" };
+            var client = new Client { Name = "Маша" };
             clientInfo.Invoke(client);
             ReadKey();
 
@@ -144,7 +144,7 @@ namespace Delegate
             Builder<Person> personBuilder1 = clientBuilder;     // или ниже
             Builder<Person> personBuilder2 = CreateClient;         //
 
-            Person person = personBuilder1("Ваня"); // вызов делегата
+            var person = personBuilder1("Ваня"); // вызов делегата
             //person.Display();
             person = personBuilder2("Ваня"); // вызов делегата
             //person.Display();
@@ -154,7 +154,7 @@ namespace Delegate
             GetInfo<Person> displayPersonInfo = DisplayPersonInfo;
             GetInfo<Client> displayClientInfo = displayPersonInfo;      // контравариантность
 
-            Client contraClient = new Client { Name = "Мая" };
+            var contraClient = new Client { Name = "Мая" };
             //displayClientInfo(contraClient); //
 
             var p1 = new Person {Name = "Саша"};
@@ -172,7 +172,7 @@ namespace Delegate
             //v1();
             ReadKey();
             //dv.Invoke(v1, v2);
-            V res = dv(v1, v2);
+            var res = dv(v1, v2);
             res();
             WriteLine();
             res = dv(res, v1, false);

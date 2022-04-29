@@ -20,7 +20,7 @@ class Programm
     static void Main()
     {
         
-        Delegate1 delegate1 = new Delegate1(Method1);
+        var delegate1 = new Delegate1(Method1);
 
        // Delegate2 delegate2 = delegate1.Invoke();
 

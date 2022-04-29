@@ -9,7 +9,7 @@ namespace Enumerations.lab01
 {
     class Program
     {
-        const int TestLength = 1500000;
+        private const int TestLength = 1500000;
 
         private static readonly Random R = new((int)DateTime.Now.Ticks);
         private const int RandomMaxValue = int.MaxValue;
@@ -34,7 +34,7 @@ namespace Enumerations.lab01
         public static List<int> GetList(long count, Func<int, int> get = null)
         {
             get ??= i => i;
-            List<int> result = new List<int>();
+            var result = new List<int>();
             for (var i = 0; i < count; ++i)
                 result.Add(get(i));
             return result;
@@ -42,7 +42,7 @@ namespace Enumerations.lab01
 
         static void Main(string[] args)
         {
-            int test = 0;
+            var test = 0;
             bool TestPredicate(int i) => i % 9 == 0;
 
             Stopwatch sw = new();
@@ -82,7 +82,7 @@ namespace Enumerations.lab01
             sw.Stop();
             Logging(test, ms.Next(), sw.ElapsedMilliseconds, list);
 
-            int ii = 0;
+            var ii = 0;
             Func<int, int> f = _ => ii;
             var newIterator = Iterator(TestLength, f);
             ii = 1;
