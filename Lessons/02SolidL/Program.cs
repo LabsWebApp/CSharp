@@ -1,4 +1,7 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
+using static System.Console;
+
+namespace SolidL;
 
 //SOLID
 
@@ -8,29 +11,32 @@
 
 
 //не верно
-/*
 abstract class Bird
 {
-    public virtual void Fly() { }
+    public abstract void Fly();
 }
 
-class Duck : Bird { }
+class Duck : Bird
+{
+    public override void Fly() => WriteLine("Уточка полетела!");
+}
 
 class Ostrich : Bird
 {
-    public override void Fly()
-    {
-        throw new Exception("Страус не умеет летать!");
-    }
+    public override void Fly() => throw new Exception("Страус не умеет летать!");
 }
-*/
+
 //верно
-abstract class Bird { }
 
-abstract class FlyingBird : Bird
-{
-    public void Fly() { }
-}
+//abstract class Bird { }
 
-class Duck : FlyingBird { }
-class Ostrich : Bird { }
+//abstract class FlyingBird : Bird
+//{
+//    public abstract void Fly();
+//}
+
+//class Duck : FlyingBird
+//{
+//    public override void Fly() => WriteLine("Уточка полетела!");
+//}
+//class Ostrich : Bird { }

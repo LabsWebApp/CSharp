@@ -58,6 +58,7 @@ class Program
 
     static void Main()
     {
+        WriteLine(-3 % 2);
         List<int> list = new()
         {
             9,
@@ -113,5 +114,11 @@ class Program
 
 internal class EvenSort : IComparer<int>
 {
-    public int Compare(int x, int y) => x == y ? 0 : x % 2 == 0 ? 1 : -1;
+    public int Compare(int x, int y) => (x % 2, y % 2) switch
+    {
+        (0, 0) or (1, 1) or (-1, -1) => 0,
+        (1, 0) or (-1, 0) => 1,
+        (0, 1) or (0, -1) => -1,
+        _ => 0
+    };
 }

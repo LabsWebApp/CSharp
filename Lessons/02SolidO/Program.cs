@@ -4,6 +4,8 @@
 
 //Неправильно:
 
+namespace SolidO;
+
 public class Invoice
 {
     //...

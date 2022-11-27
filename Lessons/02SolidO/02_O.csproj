@@ -3,13 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>_02SolidL</RootNamespace>
+    <RootNamespace>SolidO</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\02Classes10\02Classes10.csproj" />
-  </ItemGroup>
 
 </Project>
